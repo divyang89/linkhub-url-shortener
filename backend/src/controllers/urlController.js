@@ -56,18 +56,21 @@ export const redirectUrl = async (req, res) => {
   try {
     const { shortCode } = req.params
 
-    const urlData = await storage.findUrlByShortCode(shortCode)
+    // Read all URLs
+    const data = await storage.readUrls()
+    const urlData = data.urls.find(u => u.shortCode === shortCode)
 
     if (!urlData) {
       return res.status(404).json({ error: 'Short URL not found' })
     }
 
     // Increment click count
-    const data = await storage.readUrls()
-    const url = data.urls.find(u => u.shortCode === shortCode)
-    url.clicks++
+    urlData.clicks = (urlData.clicks || 0) + 1
+
+    // Write updated data back to storage
     await storage.writeUrls(data)
 
+    // Redirect to the original URL
     res.redirect(urlData.longUrl)
   } catch (error) {
     res.status(500).json({ error: error.message })
