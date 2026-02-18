@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+target/
+*.class
+
+# Environment
+.env
+.env.local
+
+# Data (File System Storage)
+data/
+*.json
+!package.json
+!package-lock.json
+!pom.xml
+
+# Build
+dist/
+build/
+*.jar
+*.war
+
+# Logs
+*.log
+logs/
+
+# Editor
+.vscode/
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
